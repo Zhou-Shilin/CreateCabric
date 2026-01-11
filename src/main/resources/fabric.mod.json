@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "createcafe",
+  "version": "${version}",
+  "name": "Create Cafe",
+  "description": "Create Cafe is a mod that allows you to create drinks, like milk tea, using the Create mod",
+  "authors": ["1mphuls3"],
+  "contact": {
+    "sources": "https://github.com/Zhou-Shilin/CreateCabric"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/createcafe/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.imphuls3.createcafe.CreateCafe"
+    ],
+    "client": [
+      "com.imphuls3.createcafe.CreateCafeClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17"
+  },
+  "suggests": {
+    "create": "*"
+  }
+}
