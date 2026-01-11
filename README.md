@@ -23,7 +23,7 @@ The built JAR file will be located in `build/libs/`.
 - Fabric API 0.91.0+
 - Java 17+
 
-## Optional Dependencies
+## Dependencies
 
 - Create Fabric (for full integration with Create mod recipes)
 
