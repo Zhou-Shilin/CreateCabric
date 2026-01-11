@@ -64,7 +64,7 @@ The mod includes simple configuration options:
 
 ## License
 
-All rights reserved
+GPL-2.0 license
 
 ## Credits
 
