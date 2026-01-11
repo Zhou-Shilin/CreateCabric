@@ -4,10 +4,7 @@ import com.Imphuls3.createcafe.common.effect.EffectRegistry;
 import com.Imphuls3.createcafe.config.CafeConfig;
 import com.Imphuls3.createcafe.core.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +32,11 @@ public class CreateCafe implements ModInitializer {
     }
 
     private void registerEvents() {
-        // Handle caffeine crash effect when caffeinated effect expires
-        // Note: Fabric doesn't have a direct equivalent to MobEffectEvent.Expired
-        // This would need a mixin or alternative approach for full functionality
+        // TODO: Implement caffeine crash effect when caffeinated effect expires
+        // This requires a mixin to hook into LivingEntity effect expiration
+        // Original NeoForge behavior:
+        // - When CAFFINATED effect expires, apply CAFFEINE_CRASH for 10 seconds
+        // - Amplifier of crash effect matches the original caffeinated amplifier
     }
 
     public static ResourceLocation modPath(String path) {

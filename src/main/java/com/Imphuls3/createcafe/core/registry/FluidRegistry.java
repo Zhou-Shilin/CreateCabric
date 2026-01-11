@@ -1,23 +1,26 @@
 package com.Imphuls3.createcafe.core.registry;
 
 import com.Imphuls3.createcafe.CreateCafe;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
 
 import static com.Imphuls3.createcafe.CreateCafe.modPath;
 
+/**
+ * Fluid registry for Create Cafe.
+ * 
+ * NOTE: This is a simplified implementation that registers bucket items only.
+ * Full fluid registration with FlowingFluid, LiquidBlock, and proper Create
+ * integration will be added when Create Fabric for 1.21.1 is available.
+ * 
+ * For now, these bucket items serve as placeholders and can be used in recipes.
+ * The fluid tanks and piping integration with Create will require the actual
+ * fluid types to be registered with Fabric's fluid API.
+ */
 public class FluidRegistry {
-    // Fluid bucket items
+    // Fluid bucket items (placeholder items until full fluid system is implemented)
     public static Item MELTED_SUGAR_BUCKET;
     public static Item FILLING_BUCKET;
     public static Item COFFEE_BUCKET;
