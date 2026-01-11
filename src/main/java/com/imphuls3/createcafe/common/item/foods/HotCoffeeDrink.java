@@ -33,7 +33,7 @@ public class HotCoffeeDrink extends Item {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.add(Text.translatable("tooltip.createcafe.caffeinated.one").formatted(Formatting.BLUE));
         tooltip.add(Text.translatable("tooltip.createcafe.warmth").formatted(Formatting.BLUE));
-        if (!type.equals("none")) {
+        if (!"none".equals(type)) {
             tooltip.add(Text.translatable("tooltip.createcafe." + type).formatted(Formatting.BLUE));
         }
     }

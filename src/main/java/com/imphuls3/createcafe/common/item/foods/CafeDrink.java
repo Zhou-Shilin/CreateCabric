@@ -31,7 +31,9 @@ public class CafeDrink extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(Text.translatable("tooltip.createcafe." + type).formatted(Formatting.BLUE));
+        if (type != null && !type.isEmpty()) {
+            tooltip.add(Text.translatable("tooltip.createcafe." + type).formatted(Formatting.BLUE));
+        }
     }
 
     @Override

@@ -32,7 +32,7 @@ public class IcedCoffeeDrinkMilk extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.add(Text.translatable("tooltip.createcafe.caffeinated").formatted(Formatting.BLUE));
-        if (!type.equals("none")) {
+        if (!"none".equals(type)) {
             tooltip.add(Text.translatable("tooltip.createcafe." + type).formatted(Formatting.BLUE));
         }
     }
