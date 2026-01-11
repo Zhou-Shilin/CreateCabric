@@ -31,24 +31,24 @@ public class HotCoffeeDrink extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.createcafe.caffeinated.one").withStyle(ChatFormatting.BLUE));
         tooltip.add(Component.translatable("tooltip.createcafe.warmth").withStyle(ChatFormatting.BLUE));
-        if(type != "none") tooltip.add(Component.translatable("tooltip.createcafe." + type).withStyle(ChatFormatting.BLUE));
+        if(!type.equals("none")) tooltip.add(Component.translatable("tooltip.createcafe." + type).withStyle(ChatFormatting.BLUE));
         super.appendHoverText(stack, context, tooltip, tooltipFlag);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
-        if(CafeConfig.giveEmptyCups.get()) {
+        if(CafeConfig.giveEmptyCups) {
             if (livingEntity instanceof ServerPlayer serverplayer) {
                 CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
                 serverplayer.awardStat(Stats.ITEM_USED.get(this));
             }
 
             if (stack.isEmpty()) {
-                return new ItemStack(ItemRegistry.ICED_COFFEE_CUP.get());
+                return new ItemStack(ItemRegistry.ICED_COFFEE_CUP);
             } else {
                 if (livingEntity instanceof Player && !((Player)livingEntity).getAbilities().instabuild) {
-                    ItemStack itemstack = new ItemStack(ItemRegistry.ICED_COFFEE_CUP.get());
+                    ItemStack itemstack = new ItemStack(ItemRegistry.ICED_COFFEE_CUP);
                     Player player = (Player)livingEntity;
                     if (!player.getInventory().add(itemstack)) {
                         player.drop(itemstack, false);

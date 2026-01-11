@@ -1,884 +1,153 @@
 package com.Imphuls3.createcafe.core.registry;
 
 import com.Imphuls3.createcafe.CreateCafe;
-import com.Imphuls3.createcafe.core.registry.FluidTypeRegistry.*;
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.util.entry.FluidEntry;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import static com.Imphuls3.createcafe.CreateCafe.modPath;
 
+/**
+ * Fluid registry for Create Cafe.
+ * 
+ * NOTE: This is a simplified implementation that registers bucket items only.
+ * Full fluid registration with FlowingFluid, LiquidBlock, and proper Create
+ * integration will be added when Create Fabric for 1.21.1 is available.
+ * 
+ * For now, these bucket items serve as placeholders and can be used in recipes.
+ * The fluid tanks and piping integration with Create will require the actual
+ * fluid types to be registered with Fabric's fluid API.
+ */
 public class FluidRegistry {
-    public static final Registrate REGISTRATE = CreateCafe.fluidRegistrate();
-    public static final ResourceLocation STILL_TEXTURE = modPath("block/milk_tea_still");
-    public static final ResourceLocation FLOWING_TEXTURE = modPath("block/milk_tea_flow");
+    // Fluid bucket items (placeholder items until full fluid system is implemented)
+    public static Item MELTED_SUGAR_BUCKET;
+    public static Item FILLING_BUCKET;
+    public static Item COFFEE_BUCKET;
+    public static Item OREO_TEA_BUCKET;
+    public static Item MANGO_TEA_BUCKET;
+    public static Item LIME_TEA_BUCKET;
+    public static Item LYCHEE_TEA_BUCKET;
+    public static Item KIWI_TEA_BUCKET;
+    public static Item MANA_TEA_BUCKET;
+    public static Item BLOOD_TEA_BUCKET;
+    public static Item LEMON_TEA_BUCKET;
+    public static Item WATERMELON_TEA_BUCKET;
+    public static Item STRAWBERRY_TEA_BUCKET;
+    public static Item BLUEBERRY_TEA_BUCKET;
+    public static Item VANILLA_TEA_BUCKET;
+    public static Item ORANGE_TEA_BUCKET;
+    public static Item PEACH_TEA_BUCKET;
+    public static Item PINEAPPLE_TEA_BUCKET;
+    public static Item BANANA_TEA_BUCKET;
+    public static Item YUCCA_TEA_BUCKET;
+    public static Item CHERRY_TEA_BUCKET;
+    public static Item PLUM_TEA_BUCKET;
+    public static Item ALOE_TEA_BUCKET;
+    public static Item APPLE_TEA_BUCKET;
+    public static Item BLACKBERRY_TEA_BUCKET;
+    public static Item PUMPKIN_TEA_BUCKET;
+    public static Item JACKFRUIT_TEA_BUCKET;
+    public static Item COCONUT_TEA_BUCKET;
+    public static Item DRAGONFRUIT_TEA_BUCKET;
+    public static Item APRICOT_TEA_BUCKET;
+    public static Item AVOCADO_TEA_BUCKET;
+    public static Item SWEETBERRY_TEA_BUCKET;
+    public static Item DURIAN_TEA_BUCKET;
+    public static Item FIG_TEA_BUCKET;
+    public static Item TAMARIND_TEA_BUCKET;
+    public static Item GOOSEBERRY_TEA_BUCKET;
+    public static Item GRAPE_TEA_BUCKET;
+    public static Item GRAPEFRUIT_TEA_BUCKET;
+    public static Item PAPAYA_TEA_BUCKET;
+    public static Item GUAVA_TEA_BUCKET;
+    public static Item PASSIONFRUIT_TEA_BUCKET;
+    public static Item POMEGRANATE_TEA_BUCKET;
+    public static Item PERSIMMON_TEA_BUCKET;
+    public static Item RASPBERRY_TEA_BUCKET;
+    public static Item STARFRUIT_TEA_BUCKET;
+    public static Item LAVENDER_TEA_BUCKET;
+    public static Item POMELO_TEA_BUCKET;
+    public static Item MANDARIN_TEA_BUCKET;
+    public static Item CITRON_TEA_BUCKET;
+    public static Item REDLOVE_TEA_BUCKET;
+    public static Item BARBERRY_TEA_BUCKET;
+    // Syrups
+    public static Item STRAWBERRY_SYRUP_BUCKET;
+    public static Item VANILLA_SYRUP_BUCKET;
+    public static Item RASPBERRY_SYRUP_BUCKET;
+    public static Item MINT_SYRUP_BUCKET;
+    public static Item CARAMEL_SYRUP_BUCKET;
+    public static Item COCONUT_SYRUP_BUCKET;
+    public static Item BANANA_SYRUP_BUCKET;
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> MELTED_SUGAR = REGISTRATE.fluid("melted_sugar",
-                    STILL_TEXTURE, FLOWING_TEXTURE, MeltedSugar::new)
-            .lang(f -> "fluid.createcafe.melted_sugar", "Melted Sugar")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
+    private static Item registerBucket(String name) {
+        Item bucket = new Item(new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
+        return Registry.register(BuiltInRegistries.ITEM, modPath(name + "_bucket"), bucket);
+    }
 
-    public static FluidEntry<BaseFlowingFluid.Flowing> FILLING = REGISTRATE.fluid("filling",
-                    STILL_TEXTURE, FLOWING_TEXTURE, Filling::new)
-            .lang(f -> "fluid.createcafe.filling", "Filling")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> OREO_TEA = REGISTRATE.fluid("oreo_tea",
-                    STILL_TEXTURE, FLOWING_TEXTURE, Oreo::new)
-            .lang(f -> "fluid.createcafe." + "oreo" + "_tea", "Oreo Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    
-    public static FluidEntry<BaseFlowingFluid.Flowing> MANGO_TEA = REGISTRATE.fluid("mango_tea",
-                    STILL_TEXTURE, FLOWING_TEXTURE, Mango::new)
-            .lang(f -> "fluid.createcafe." + "mango" + "_tea", "Mango Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> LIME_TEA = REGISTRATE.fluid("lime_tea",
-                    STILL_TEXTURE, FLOWING_TEXTURE, Lime::new)
-            .lang(f -> "fluid.createcafe." + "lime" + "_tea", "Lime Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> LYCHEE_TEA = REGISTRATE.fluid("lychee_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Lychee::new)
-            .lang(f -> "fluid.createcafe." + "lychee" + "_tea", "Lychee Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> KIWI_TEA = REGISTRATE.fluid("kiwi_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Kiwi::new)
-            .lang(f -> "fluid.createcafe." + "kiwi" + "_tea", "Kiwi Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> MANA_TEA = REGISTRATE.fluid("mana_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Mana::new)
-            .lang(f -> "fluid.createcafe." + "mana" + "_tea", "Mana Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> BLOOD_TEA = REGISTRATE.fluid("blood_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Blood::new)
-            .lang(f -> "fluid.createcafe." + "blood" + "_tea", "Blood Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> LEMON_TEA = REGISTRATE.fluid("lemon_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Lemon::new)
-            .lang(f -> "fluid.createcafe." + "lemon" + "_tea", "Lemon Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> WATERMELON_TEA = REGISTRATE.fluid("watermelon_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Watermelon::new)
-            .lang(f -> "fluid.createcafe." + "watermelon" + "_tea", "Watermelon Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> STRAWBERRY_TEA = REGISTRATE.fluid("strawberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Strawberry::new)
-            .lang(f -> "fluid.createcafe." + "strawberry" + "_tea", "Strawberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> BLUEBERRY_TEA = REGISTRATE.fluid("blueberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Blueberry::new)
-            .lang(f -> "fluid.createcafe." + "blueberry" + "_tea", "Blueberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> VANILLA_TEA = REGISTRATE.fluid("vanilla_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Vanilla::new)
-            .lang(f -> "fluid.createcafe." + "vanilla" + "_tea", "Vanilla Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> ORANGE_TEA = REGISTRATE.fluid("orange_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Orange::new)
-            .lang(f -> "fluid.createcafe." + "orange" + "_tea", "Orange Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PEACH_TEA = REGISTRATE.fluid("peach_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Peach::new)
-            .lang(f -> "fluid.createcafe." + "peach" + "_tea", "Peach Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PINEAPPLE_TEA = REGISTRATE.fluid("pineapple_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Pineapple::new)
-            .lang(f -> "fluid.createcafe." + "pineapple" + "_tea", "Pineapple Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> BANANA_TEA = REGISTRATE.fluid("banana_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Banana::new)
-            .lang(f -> "fluid.createcafe." + "banana" + "_tea", "Banana Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> YUCCA_TEA = REGISTRATE.fluid("yucca_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Yucca::new)
-            .lang(f -> "fluid.createcafe." + "yucca" + "_tea", "Yucca Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> CHERRY_TEA = REGISTRATE.fluid("cherry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Cherry::new)
-            .lang(f -> "fluid.createcafe." + "cherry" + "_tea", "Cherry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PLUM_TEA = REGISTRATE.fluid("plum_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Plum::new)
-            .lang(f -> "fluid.createcafe." + "plum" + "_tea", "Plum Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> ALOE_TEA = REGISTRATE.fluid("aloe_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Aloe::new)
-            .lang(f -> "fluid.createcafe." + "aloe" + "_tea", "Aloe Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> APPLE_TEA = REGISTRATE.fluid("apple_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Apple::new)
-            .lang(f -> "fluid.createcafe." + "apple" + "_tea", "Apple Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> BLACKBERRY_TEA = REGISTRATE.fluid("blackberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Blackberry::new)
-            .lang(f -> "fluid.createcafe." + "blackberry" + "_tea", "Blackberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PUMPKIN_TEA = REGISTRATE.fluid("pumpkin_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Pumpkin::new)
-            .lang(f -> "fluid.createcafe." + "pumpkin" + "_tea", "Pumpkin Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> JACKFRUIT_TEA = REGISTRATE.fluid("jackfruit_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Jackfruit::new)
-            .lang(f -> "fluid.createcafe." + "jackfruit" + "_tea", "Jackfruit Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> COCONUT_TEA = REGISTRATE.fluid("coconut_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Coconut::new)
-            .lang(f -> "fluid.createcafe." + "coconut" + "_tea", "Coconut Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> DRAGONFRUIT_TEA = REGISTRATE.fluid("dragonfruit_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Dragonfruit::new)
-            .lang(f -> "fluid.createcafe." + "dragonfruit" + "_tea", "Dragonfruit Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> APRICOT_TEA = REGISTRATE.fluid("apricot_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Apricot::new)
-            .lang(f -> "fluid.createcafe." + "apricot" + "_tea", "Apricot Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> AVOCADO_TEA = REGISTRATE.fluid("avocado_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Avocado::new)
-            .lang(f -> "fluid.createcafe." + "avocado" + "_tea", "Avocado Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> SWEETBERRY_TEA = REGISTRATE.fluid("sweetberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Sweetberry::new)
-            .lang(f -> "fluid.createcafe." + "sweetberry" + "_tea", "Sweetberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> DURIAN_TEA = REGISTRATE.fluid("durian_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Durian::new)
-            .lang(f -> "fluid.createcafe." + "durian" + "_tea", "Durian Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> FIG_TEA = REGISTRATE.fluid("fig_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Fig::new)
-            .lang(f -> "fluid.createcafe." + "fig" + "_tea", "Fig Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> TAMARIND_TEA = REGISTRATE.fluid("tamarind_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Tamarind::new)
-            .lang(f -> "fluid.createcafe." + "tamarind" + "_tea", "Tamarind Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> GOOSEBERRY_TEA = REGISTRATE.fluid("gooseberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Gooseberry::new)
-            .lang(f -> "fluid.createcafe." + "gooseberry" + "_tea", "Gooseberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> GRAPE_TEA = REGISTRATE.fluid("grape_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Grape::new)
-            .lang(f -> "fluid.createcafe." + "grape" + "_tea", "Grape Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> GRAPEFRUIT_TEA = REGISTRATE.fluid("grapefruit_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Grapefruit::new)
-            .lang(f -> "fluid.createcafe." + "grapefruit" + "_tea", "Grapefruit Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PAPAYA_TEA = REGISTRATE.fluid("papaya_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Papaya::new)
-            .lang(f -> "fluid.createcafe." + "papaya" + "_tea", "Papaya Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> GUAVA_TEA = REGISTRATE.fluid("guava_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Guava::new)
-            .lang(f -> "fluid.createcafe." + "guava" + "_tea", "Guava Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PASSIONFRUIT_TEA = REGISTRATE.fluid("passionfruit_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Passionfruit::new)
-            .lang(f -> "fluid.createcafe." + "passionfruit" + "_tea", "Passionfruit Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> POMEGRANATE_TEA = REGISTRATE.fluid("pomegranate_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Pomegranate::new)
-            .lang(f -> "fluid.createcafe." + "pomegranate" + "_tea", "Pomegranate Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> PERSIMMON_TEA = REGISTRATE.fluid("persimmon_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Persimmon::new)
-            .lang(f -> "fluid.createcafe." + "persimmon" + "_tea", "Persimmon Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> RASPBERRY_TEA = REGISTRATE.fluid("raspberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Raspberry::new)
-            .lang(f -> "fluid.createcafe." + "raspberry" + "_tea", "Raspberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> STARFRUIT_TEA = REGISTRATE.fluid("starfruit_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Starfruit::new)
-            .lang(f -> "fluid.createcafe." + "starfruit" + "_tea", "Starfruit Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> LAVENDER_TEA = REGISTRATE.fluid("lavender_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Lavender::new)
-            .lang(f -> "fluid.createcafe." + "lavender" + "_tea", "Lavender Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> POMELO_TEA = REGISTRATE.fluid("pomelo_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Pomelo::new)
-            .lang(f -> "fluid.createcafe." + "pomelo" + "_tea", "Pomelo Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> MANDARIN_TEA = REGISTRATE.fluid("mandarin_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Mandarin::new)
-            .lang(f -> "fluid.createcafe." + "mandarin" + "_tea", "Mandarin Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> CITRON_TEA = REGISTRATE.fluid("citron_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Citron::new)
-            .lang(f -> "fluid.createcafe." + "citron" + "_tea", "Citron Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> REDLOVE_TEA = REGISTRATE.fluid("redlove_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Redlove::new)
-            .lang(f -> "fluid.createcafe." + "redlove" + "_tea", "Redlove Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static FluidEntry<BaseFlowingFluid.Flowing> BARBERRY_TEA = REGISTRATE.fluid("barberry_tea",
-STILL_TEXTURE, FLOWING_TEXTURE, Barberry::new)
-            .lang(f -> "fluid.createcafe." + "barberry" + "_tea", "Barberry Tea")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static final FluidEntry<BaseFlowingFluid.Flowing> COFFEE = REGISTRATE.fluid("coffee",
-                    STILL_TEXTURE, FLOWING_TEXTURE, Coffee::new)
-            .lang(f -> "fluid.createcafe.coffee", "Coffee")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static final FluidEntry<BaseFlowingFluid.Flowing> STRAWBERRY_SYRUP = REGISTRATE.fluid("strawberry_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, StrawberryS::new)
-            .lang(f -> "fluid.createcafe.strawberry_syrup", "Strawberry Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> VANILLA_SYRUP = REGISTRATE.fluid("vanilla_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, VanillaS::new)
-            .lang(f -> "fluid.createcafe.vanilla_syrup", "Vanilla Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> RASPBERRY_SYRUP = REGISTRATE.fluid("raspberry_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, RaspberryS::new)
-            .lang(f -> "fluid.createcafe.raspberry_syrup", "Raspberry Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> MINT_SYRUP = REGISTRATE.fluid("mint_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, MintS::new)
-            .lang(f -> "fluid.createcafe.mint_syrup", "Mint Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> CARAMEL_SYRUP = REGISTRATE.fluid("caramel_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, CaramelS::new)
-            .lang(f -> "fluid.createcafe.caramel_syrup", "Caramel Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> COCONUT_SYRUP = REGISTRATE.fluid("coconut_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, CoconutS::new)
-            .lang(f -> "fluid.createcafe.coconut_syrup", "Coconut Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-    public static final FluidEntry<BaseFlowingFluid.Flowing> BANANA_SYRUP = REGISTRATE.fluid("banana_syrup",
-                    STILL_TEXTURE, FLOWING_TEXTURE, BananaS::new)
-            .lang(f -> "fluid.createcafe.banana_syrup", "Banana Syrup")
-            .properties(p -> p.viscosity(1000)
-                    .density(140).canSwim(true))
-            .fluidProperties(p -> p
-                    .levelDecreasePerBlock(2)
-                    .tickRate(15)
-                    .slopeFindDistance(6)
-                    .explosionResistance(100F))
-            .source(BaseFlowingFluid.Source::new)
-            .bucket()
-            .build()
-            .register();
-
-    public static void register(IEventBus eventBus) {
+    public static void register() {
+        // Register fluid bucket items
+        // Since Fabric fluid system requires more complex setup with FlowingFluid,
+        // we'll register placeholder buckets that can be filled in recipes
+        MELTED_SUGAR_BUCKET = registerBucket("melted_sugar");
+        FILLING_BUCKET = registerBucket("filling");
+        COFFEE_BUCKET = registerBucket("coffee");
+        OREO_TEA_BUCKET = registerBucket("oreo_tea");
+        MANGO_TEA_BUCKET = registerBucket("mango_tea");
+        LIME_TEA_BUCKET = registerBucket("lime_tea");
+        LYCHEE_TEA_BUCKET = registerBucket("lychee_tea");
+        KIWI_TEA_BUCKET = registerBucket("kiwi_tea");
+        MANA_TEA_BUCKET = registerBucket("mana_tea");
+        BLOOD_TEA_BUCKET = registerBucket("blood_tea");
+        LEMON_TEA_BUCKET = registerBucket("lemon_tea");
+        WATERMELON_TEA_BUCKET = registerBucket("watermelon_tea");
+        STRAWBERRY_TEA_BUCKET = registerBucket("strawberry_tea");
+        BLUEBERRY_TEA_BUCKET = registerBucket("blueberry_tea");
+        VANILLA_TEA_BUCKET = registerBucket("vanilla_tea");
+        ORANGE_TEA_BUCKET = registerBucket("orange_tea");
+        PEACH_TEA_BUCKET = registerBucket("peach_tea");
+        PINEAPPLE_TEA_BUCKET = registerBucket("pineapple_tea");
+        BANANA_TEA_BUCKET = registerBucket("banana_tea");
+        YUCCA_TEA_BUCKET = registerBucket("yucca_tea");
+        CHERRY_TEA_BUCKET = registerBucket("cherry_tea");
+        PLUM_TEA_BUCKET = registerBucket("plum_tea");
+        ALOE_TEA_BUCKET = registerBucket("aloe_tea");
+        APPLE_TEA_BUCKET = registerBucket("apple_tea");
+        BLACKBERRY_TEA_BUCKET = registerBucket("blackberry_tea");
+        PUMPKIN_TEA_BUCKET = registerBucket("pumpkin_tea");
+        JACKFRUIT_TEA_BUCKET = registerBucket("jackfruit_tea");
+        COCONUT_TEA_BUCKET = registerBucket("coconut_tea");
+        DRAGONFRUIT_TEA_BUCKET = registerBucket("dragonfruit_tea");
+        APRICOT_TEA_BUCKET = registerBucket("apricot_tea");
+        AVOCADO_TEA_BUCKET = registerBucket("avocado_tea");
+        SWEETBERRY_TEA_BUCKET = registerBucket("sweetberry_tea");
+        DURIAN_TEA_BUCKET = registerBucket("durian_tea");
+        FIG_TEA_BUCKET = registerBucket("fig_tea");
+        TAMARIND_TEA_BUCKET = registerBucket("tamarind_tea");
+        GOOSEBERRY_TEA_BUCKET = registerBucket("gooseberry_tea");
+        GRAPE_TEA_BUCKET = registerBucket("grape_tea");
+        GRAPEFRUIT_TEA_BUCKET = registerBucket("grapefruit_tea");
+        PAPAYA_TEA_BUCKET = registerBucket("papaya_tea");
+        GUAVA_TEA_BUCKET = registerBucket("guava_tea");
+        PASSIONFRUIT_TEA_BUCKET = registerBucket("passionfruit_tea");
+        POMEGRANATE_TEA_BUCKET = registerBucket("pomegranate_tea");
+        PERSIMMON_TEA_BUCKET = registerBucket("persimmon_tea");
+        RASPBERRY_TEA_BUCKET = registerBucket("raspberry_tea");
+        STARFRUIT_TEA_BUCKET = registerBucket("starfruit_tea");
+        LAVENDER_TEA_BUCKET = registerBucket("lavender_tea");
+        POMELO_TEA_BUCKET = registerBucket("pomelo_tea");
+        MANDARIN_TEA_BUCKET = registerBucket("mandarin_tea");
+        CITRON_TEA_BUCKET = registerBucket("citron_tea");
+        REDLOVE_TEA_BUCKET = registerBucket("redlove_tea");
+        BARBERRY_TEA_BUCKET = registerBucket("barberry_tea");
+        // Syrups
+        STRAWBERRY_SYRUP_BUCKET = registerBucket("strawberry_syrup");
+        VANILLA_SYRUP_BUCKET = registerBucket("vanilla_syrup");
+        RASPBERRY_SYRUP_BUCKET = registerBucket("raspberry_syrup");
+        MINT_SYRUP_BUCKET = registerBucket("mint_syrup");
+        CARAMEL_SYRUP_BUCKET = registerBucket("caramel_syrup");
+        COCONUT_SYRUP_BUCKET = registerBucket("coconut_syrup");
+        BANANA_SYRUP_BUCKET = registerBucket("banana_syrup");
     }
 }
