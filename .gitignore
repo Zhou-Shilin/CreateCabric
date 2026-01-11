@@ -20,6 +20,10 @@ build
 # other
 eclipse
 run
+logs
+
+# Fabric/Loom specific
+remappedSrc
 
 # Files from Forge MDK
 forge*changelog.txt
