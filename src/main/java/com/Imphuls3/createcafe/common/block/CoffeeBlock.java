@@ -23,7 +23,7 @@ public class CoffeeBlock extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return ItemRegistry.COFFEE_BEANS.get();
+        return ItemRegistry.COFFEE_BEANS;
     }
 
     @Override

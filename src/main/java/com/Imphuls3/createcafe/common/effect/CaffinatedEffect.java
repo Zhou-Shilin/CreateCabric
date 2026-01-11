@@ -13,8 +13,8 @@ public class CaffinatedEffect extends MobEffect {
 
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap map, int amplifier) {
-        if(entity.canBeAffected(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH.get(), 5*20))) {
-            entity.addEffect(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH.get(), 10*20, amplifier));
+        if(entity.canBeAffected(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH, 5*20))) {
+            entity.addEffect(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH, 10*20, amplifier));
         }
         super.removeAttributeModifiers(entity, map, amplifier);
     }

@@ -22,7 +22,7 @@ public class CassavaBlock extends CropBlock {
     }
     @Override
     protected ItemLike getBaseSeedId() {
-        return ItemRegistry.CASSAVA_SEEDS.get();
+        return ItemRegistry.CASSAVA_SEEDS;
     }
 
     @Override
