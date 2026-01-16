@@ -14,6 +14,11 @@ import net.minecraft.util.registry.Registry;
 
 public class ItemRegistry {
 
+    // Creative Tab - MUST be defined FIRST before items that reference it
+    public static final ItemGroup CREATE_CAFE_GROUP = FabricItemGroupBuilder.build(
+            new Identifier(CreateCafe.ID, "main"),
+            () -> new ItemStack(Registry.ITEM.get(new Identifier(CreateCafe.ID, "strawberry_milk_tea"))));
+
     private static Item.Settings HIDDEN_PROPERTIES() {
         return new FabricItemSettings().maxCount(1);
     }
@@ -76,11 +81,6 @@ public class ItemRegistry {
     public static final Item COFFEE_GROUNDS = new Item(itemSettings().food(ModFoods.ROASTED_COFFEE));
     public static final Item CASSAVA_SEEDS = new AliasedBlockItem(BlockRegistry.CASSAVA, itemSettings());
     public static final Item CASSAVA_ROOT = new Item(itemSettings().food(ModFoods.CASSAVA_ROOT));
-
-    // Creative Tab
-    public static final ItemGroup CREATE_CAFE_GROUP = FabricItemGroupBuilder.build(
-            new Identifier(CreateCafe.ID, "main"),
-            () -> new ItemStack(STRAWBERRY_TEA));
 
     public static void register() {
         // Food Items

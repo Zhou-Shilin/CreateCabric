@@ -266,6 +266,7 @@
     "item.createcafe.strawberry_syrup_bucket": "草莓糖浆桶",
     "item.createcafe.vanilla_syrup_bucket": "香草糖浆桶",
     //创造标签
+    "itemGroup.createcafe.main": "机械动力：咖啡",
     "itemGroup.createCafeFluidTab": "机械动力：咖啡丨流体",
     "itemGroup.createCafeTab": "机械动力：咖啡",
     //工具提示
@@ -280,6 +281,7 @@
     "tooltip.createcafe.strength": "力量 II（0:10）",
     "tooltip.createcafe.super": "抗性提升 II（0:10）\n速度 II（0:10）\n伤害吸收 II（0:10）\n生命恢复 II（0:10）\n防火 II（0:10）",
     "tooltip.createcafe.water_breathing": "水下呼吸 II（0:10）",
+    "tooltip.createcafe.warmth": "温暖",
     //效果
     "effect.createcafe.caffeinated": "咖啡因"
   }
