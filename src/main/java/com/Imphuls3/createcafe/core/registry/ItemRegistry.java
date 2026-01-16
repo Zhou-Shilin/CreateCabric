@@ -19,18 +19,22 @@ public class ItemRegistry {
     }
 
     private static Item.Settings makeDrink() {
-        return new FabricItemSettings();
+        return new FabricItemSettings().group(CREATE_CAFE_GROUP);
+    }
+
+    private static Item.Settings itemSettings() {
+        return new FabricItemSettings().group(CREATE_CAFE_GROUP);
     }
 
     // Food Items:
-    public static final Item MANA_BERRIES = new Item(new FabricItemSettings().food(ModFoods.MANA_BERRIES));
-    public static final Item OREO = new Item(new FabricItemSettings().food(ModFoods.OREO));
+    public static final Item MANA_BERRIES = new Item(itemSettings().food(ModFoods.MANA_BERRIES));
+    public static final Item OREO = new Item(itemSettings().food(ModFoods.OREO));
     public static final Item OREO_INCOMPLETE = new Item(HIDDEN_PROPERTIES());
-    public static final Item OREO_HALF_RAW = new Item(new FabricItemSettings().food(ModFoods.OREO_HALF_RAW));
-    public static final Item OREO_HALF = new Item(new FabricItemSettings().food(ModFoods.OREO_HALF));
-    public static final Item OREO_DOUGH = new Item(new FabricItemSettings());
-    public static final Item CRUSHED_OREO = new Item(new FabricItemSettings().food(ModFoods.CRUSHED_OREO));
-    public static final Item BLOOD_ORANGE = new Item(new FabricItemSettings().food(ModFoods.BLOOD_ORANGE));
+    public static final Item OREO_HALF_RAW = new Item(itemSettings().food(ModFoods.OREO_HALF_RAW));
+    public static final Item OREO_HALF = new Item(itemSettings().food(ModFoods.OREO_HALF));
+    public static final Item OREO_DOUGH = new Item(itemSettings());
+    public static final Item CRUSHED_OREO = new Item(itemSettings().food(ModFoods.CRUSHED_OREO));
+    public static final Item BLOOD_ORANGE = new Item(itemSettings().food(ModFoods.BLOOD_ORANGE));
 
     // Drink Items - simplified for core functionality
     public static final CafeDrink MANGO_TEA = new CafeDrink(makeDrink().food(ModFoods.SPEED_DRINK), "speed");
@@ -55,23 +59,23 @@ public class ItemRegistry {
     public static final IcedCoffeeDrinkFlavor BANANA_ICED_COFFEE = new IcedCoffeeDrinkFlavor(makeDrink().food(ModFoods.ICED_COFFEE_DRINK_FLAVOR.apply(StatusEffects.SATURATION)), "saturation");
 
     // Non Food Items:
-    public static final Item BOBA_CUP = new Item(new FabricItemSettings());
-    public static final Item EMPTY_BOBA_CUP = new Item(new FabricItemSettings());
-    public static final Item ICED_COFFEE_CUP = new Item(new FabricItemSettings());
-    public static final Item ICED_COFFEE_CUP_ICE = new Item(new FabricItemSettings());
+    public static final Item BOBA_CUP = new Item(itemSettings());
+    public static final Item EMPTY_BOBA_CUP = new Item(itemSettings());
+    public static final Item ICED_COFFEE_CUP = new Item(itemSettings());
+    public static final Item ICED_COFFEE_CUP_ICE = new Item(itemSettings());
 
     // Boba:
-    public static final Item BOBA = new Item(new FabricItemSettings().food(ModFoods.BOBA));
-    public static final Item RAW_BOBA = new Item(new FabricItemSettings().food(ModFoods.RAW_BOBA));
-    public static final Item TAPIOCA_FLOUR = new Item(new FabricItemSettings());
+    public static final Item BOBA = new Item(itemSettings().food(ModFoods.BOBA));
+    public static final Item RAW_BOBA = new Item(itemSettings().food(ModFoods.RAW_BOBA));
+    public static final Item TAPIOCA_FLOUR = new Item(itemSettings());
 
     // Crop Items:
-    public static final Item COFFEE_FRUIT = new Item(new FabricItemSettings().food(ModFoods.COFFEE_FRUIT));
-    public static final Item COFFEE_BEANS = new AliasedBlockItem(BlockRegistry.COFFEE, new FabricItemSettings().food(ModFoods.COFFEE));
-    public static final Item ROASTED_COFFEE = new Item(new FabricItemSettings().food(ModFoods.ROASTED_COFFEE));
-    public static final Item COFFEE_GROUNDS = new Item(new FabricItemSettings().food(ModFoods.ROASTED_COFFEE));
-    public static final Item CASSAVA_SEEDS = new AliasedBlockItem(BlockRegistry.CASSAVA, new FabricItemSettings());
-    public static final Item CASSAVA_ROOT = new Item(new FabricItemSettings().food(ModFoods.CASSAVA_ROOT));
+    public static final Item COFFEE_FRUIT = new Item(itemSettings().food(ModFoods.COFFEE_FRUIT));
+    public static final Item COFFEE_BEANS = new AliasedBlockItem(BlockRegistry.COFFEE, itemSettings().food(ModFoods.COFFEE));
+    public static final Item ROASTED_COFFEE = new Item(itemSettings().food(ModFoods.ROASTED_COFFEE));
+    public static final Item COFFEE_GROUNDS = new Item(itemSettings().food(ModFoods.ROASTED_COFFEE));
+    public static final Item CASSAVA_SEEDS = new AliasedBlockItem(BlockRegistry.CASSAVA, itemSettings());
+    public static final Item CASSAVA_ROOT = new Item(itemSettings().food(ModFoods.CASSAVA_ROOT));
 
     // Creative Tab
     public static final ItemGroup CREATE_CAFE_GROUP = FabricItemGroupBuilder.build(

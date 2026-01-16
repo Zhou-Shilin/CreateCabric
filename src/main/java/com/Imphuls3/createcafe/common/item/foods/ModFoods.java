@@ -52,15 +52,23 @@ public class ModFoods {
             .statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 10 * 20, 1), 1.0F)
             .hunger(8).saturationModifier(0.2F).alwaysEdible().build();
 
-    public static final Function<StatusEffect, FoodComponent> ICED_COFFEE_DRINK = (effect -> new FoodComponent.Builder()
-            .statusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINATED, 10 * 20, 3), 1.0F)
-            .statusEffect(effect != null ? new StatusEffectInstance(effect, 10 * 20, 1) :
-                    new StatusEffectInstance(StatusEffects.WATER_BREATHING, 0, 0), effect != null ? 1.0F : 0.0F)
-            .hunger(8).saturationModifier(0.2F).alwaysEdible().build());
+    public static final Function<StatusEffect, FoodComponent> ICED_COFFEE_DRINK = (effect -> {
+        FoodComponent.Builder builder = new FoodComponent.Builder()
+                .statusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINATED, 10 * 20, 3), 1.0F)
+                .hunger(8).saturationModifier(0.2F).alwaysEdible();
+        if (effect != null) {
+            builder.statusEffect(new StatusEffectInstance(effect, 10 * 20, 1), 1.0F);
+        }
+        return builder.build();
+    });
 
-    public static final Function<StatusEffect, FoodComponent> ICED_COFFEE_DRINK_FLAVOR = (effect -> new FoodComponent.Builder()
-            .statusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINATED, 10 * 20, 1), 1.0F)
-            .statusEffect(effect != null ? new StatusEffectInstance(effect, 10 * 20, 1) :
-                    new StatusEffectInstance(StatusEffects.WATER_BREATHING, 0, 0), effect != null ? 1.0F : 0.0F)
-            .hunger(8).saturationModifier(0.2F).alwaysEdible().build());
+    public static final Function<StatusEffect, FoodComponent> ICED_COFFEE_DRINK_FLAVOR = (effect -> {
+        FoodComponent.Builder builder = new FoodComponent.Builder()
+                .statusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINATED, 10 * 20, 1), 1.0F)
+                .hunger(8).saturationModifier(0.2F).alwaysEdible();
+        if (effect != null) {
+            builder.statusEffect(new StatusEffectInstance(effect, 10 * 20, 1), 1.0F);
+        }
+        return builder.build();
+    });
 }

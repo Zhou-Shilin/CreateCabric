@@ -4,6 +4,7 @@ import com.Imphuls3.createcafe.core.registry.ItemRegistry;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IcedCoffeeDrinkMilk extends Item {
@@ -36,7 +38,18 @@ public class IcedCoffeeDrinkMilk extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (!world.isClient) user.clearStatusEffects(); // Clears effects like milk
+        // Remove only negative effects (similar to milk behavior)
+        if (!world.isClient) {
+            List<StatusEffectInstance> toRemove = new ArrayList<>();
+            for (StatusEffectInstance effect : user.getStatusEffects()) {
+                if (!effect.getEffectType().isBeneficial()) {
+                    toRemove.add(effect);
+                }
+            }
+            for (StatusEffectInstance effect : toRemove) {
+                user.removeStatusEffect(effect.getEffectType());
+            }
+        }
         super.finishUsing(stack, world, user);
         if (user instanceof ServerPlayerEntity serverPlayer) {
             Criteria.CONSUME_ITEM.trigger(serverPlayer, stack);
