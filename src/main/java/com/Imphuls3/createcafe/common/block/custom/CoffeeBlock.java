@@ -1,24 +1,24 @@
 package com.Imphuls3.createcafe.common.block.custom;
 
 import com.Imphuls3.createcafe.core.registry.ItemRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CropBlock;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 
 public class CoffeeBlock extends CropBlock {
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
-    public CoffeeBlock(Properties properties) {
-        super(properties);
+            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
+            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
+            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D),
+            Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
+
+    public CoffeeBlock(Settings settings) {
+        super(settings);
     }
 
     @Override
@@ -27,19 +27,20 @@ public class CoffeeBlock extends CropBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, net.minecraft.block.ShapeContext context) {
         if(this.getAge(state) < 3) {
-            return SHAPE_BY_AGE[state.getValue(this.getAgeProperty())];
+            return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
         }
         return SHAPE_BY_AGE[3];
     }
+
     @Override
-    protected int getBonemealAgeIncrease(Level pLevel) {
-        return super.getBonemealAgeIncrease(pLevel) / 3;
+    protected int getGrowthAmount(World world) {
+        return super.getGrowthAmount(world) / 3;
     }
 
     @Override
-    protected ItemLike getBaseSeedId() {
-        return ItemRegistry.COFFEE_BEANS.get();
+    protected ItemConvertible getSeedsItem() {
+        return ItemRegistry.COFFEE_BEANS;
     }
 }
