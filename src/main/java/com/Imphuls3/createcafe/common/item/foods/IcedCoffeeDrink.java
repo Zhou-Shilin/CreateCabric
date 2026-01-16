@@ -1,20 +1,20 @@
 package com.Imphuls3.createcafe.common.item.foods;
 
 import com.Imphuls3.createcafe.core.registry.ItemRegistry;
-import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.level.Level;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.UseAction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -22,33 +22,33 @@ import java.util.List;
 public class IcedCoffeeDrink extends Item {
     String type;
 
-    public IcedCoffeeDrink(Properties properties, String type) {
-        super(properties);
+    public IcedCoffeeDrink(Settings settings, String type) {
+        super(settings);
         this.type = type;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag advanced) {
-        super.appendHoverText(stack, level, tooltip, advanced);
-        tooltip.add(Component.translatable("tooltip.createcafe.caffeinated").withStyle(ChatFormatting.BLUE));
-        if(type != "none") tooltip.add(Component.translatable("tooltip.createcafe." + type).withStyle(ChatFormatting.BLUE));
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
+        tooltip.add(Text.translatable("tooltip.createcafe.caffeinated").formatted(Formatting.BLUE));
+        if (!type.equals("none")) tooltip.add(Text.translatable("tooltip.createcafe." + type).formatted(Formatting.BLUE));
     }
 
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(stack, level, livingEntity);
-        if (livingEntity instanceof ServerPlayer serverplayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
-            serverplayer.awardStat(Stats.ITEM_USED.get(this));
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        super.finishUsing(stack, world, user);
+        if (user instanceof ServerPlayerEntity serverPlayer) {
+            Criteria.CONSUME_ITEM.trigger(serverPlayer, stack);
+            serverPlayer.incrementStat(Stats.USED.getOrCreateStat(this));
         }
 
         if (stack.isEmpty()) {
-            return new ItemStack(ItemRegistry.ICED_COFFEE_CUP.get());
+            return new ItemStack(ItemRegistry.ICED_COFFEE_CUP);
         } else {
-            if (livingEntity instanceof Player && !((Player)livingEntity).getAbilities().instabuild) {
-                ItemStack itemstack = new ItemStack(ItemRegistry.ICED_COFFEE_CUP.get());
-                Player player = (Player)livingEntity;
-                if (!player.getInventory().add(itemstack)) {
-                    player.drop(itemstack, false);
+            if (user instanceof PlayerEntity player && !player.getAbilities().creativeMode) {
+                ItemStack itemstack = new ItemStack(ItemRegistry.ICED_COFFEE_CUP);
+                if (!player.getInventory().insertStack(itemstack)) {
+                    player.dropItem(itemstack, false);
                 }
             }
             return stack;
@@ -56,12 +56,12 @@ public class IcedCoffeeDrink extends Item {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.DRINK;
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.DRINK;
     }
 
     @Override
-    public SoundEvent getDrinkingSound() {
-        return SoundEvents.GENERIC_DRINK;
+    public SoundEvent getDrinkSound() {
+        return SoundEvents.ENTITY_GENERIC_DRINK;
     }
 }

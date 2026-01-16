@@ -1,17 +1,22 @@
 package com.Imphuls3.createcafe.common.effect;
 
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class WarmthEffect extends MobEffect {
-    public WarmthEffect(MobEffectCategory category, int color) {
+public class WarmthEffect extends StatusEffect {
+    public WarmthEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
-        entity.setTicksFrozen(0);
-        super.applyEffectTick(entity, amplifier);
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        entity.setFrozenTicks(0);
+        super.applyUpdateEffect(entity, amplifier);
+    }
+
+    @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return true;
     }
 }
