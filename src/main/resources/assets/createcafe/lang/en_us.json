@@ -10,7 +10,9 @@
   "tooltip.createcafe.super": "Resistance (0:10), Speed (0:10), Strength (0:10), Regeneration (0:10)",
   "tooltip.createcafe.caffeinated.one": "Caffeinated II (0:10)",
   "tooltip.createcafe.caffeinated": "Caffeinated IV (0:10)",
+  "tooltip.createcafe.warmth": "Warmth",
 
+  "itemGroup.createcafe.main": "Create Cafe",
   "itemGroup.createCafeTab": "Create Cafe",
   "itemGroup.createCafeFluidTab": "Create Cafe Fluids",
 

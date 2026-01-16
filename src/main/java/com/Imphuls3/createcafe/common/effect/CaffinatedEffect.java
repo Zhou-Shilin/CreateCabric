@@ -1,21 +1,27 @@
 package com.Imphuls3.createcafe.common.effect;
 
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectInstance;
 
-public class CaffinatedEffect extends MobEffect {
-    public CaffinatedEffect(MobEffectCategory category, int color) {
+public class CaffinatedEffect extends StatusEffect {
+    public CaffinatedEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 
     @Override
-    public void removeAttributeModifiers(LivingEntity entity, AttributeMap map, int amplifier) {
-        if(entity.canBeAffected(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH.get(), 5*20))) {
-            entity.addEffect(new MobEffectInstance(EffectRegistry.CAFFEINE_CRASH.get(), 10*20, amplifier));
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        if (entity.canHaveStatusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINE_CRASH, 5 * 20))) {
+            entity.addStatusEffect(new StatusEffectInstance(EffectRegistry.CAFFEINE_CRASH, 10 * 20, amplifier));
         }
-        super.removeAttributeModifiers(entity, map, amplifier);
+        super.onRemoved(entity, attributes, amplifier);
+    }
+
+    public CaffinatedEffect addAttributeModifier(net.minecraft.entity.attribute.EntityAttribute attribute, String uuid, double amount, EntityAttributeModifier.Operation operation) {
+        super.addAttributeModifier(attribute, uuid, amount, operation);
+        return this;
     }
 }
