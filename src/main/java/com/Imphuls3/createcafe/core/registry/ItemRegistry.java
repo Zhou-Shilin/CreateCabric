@@ -10,6 +10,11 @@ import net.minecraft.util.registry.Registry;
 
 public class ItemRegistry {
 
+    /**
+     * Settings for items that should not appear in creative tabs.
+     * Used for drink items that require optional mod dependencies.
+     * Items with these settings have max stack size of 1 and no item group.
+     */
     public static Item.Settings HIDDEN_SETTINGS() {
         return new Item.Settings().maxCount(1);
     }
