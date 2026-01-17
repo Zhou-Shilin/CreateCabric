@@ -1,15 +1,13 @@
 package com.imphuls3.createcafe.common.fluid;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
@@ -76,8 +74,8 @@ public abstract class CafeFluid extends FlowableFluid {
 
     @Override
     protected BlockState toBlockState(FluidState state) {
-        // These fluids don't have block forms by default
-        return null;
+        // These fluids are not placeable in the world, return air
+        return Blocks.AIR.getDefaultState();
     }
 
     @Override
@@ -93,5 +91,10 @@ public abstract class CafeFluid extends FlowableFluid {
     @Override
     public boolean matchesType(Fluid fluid) {
         return fluid == getStill() || fluid == getFlowing();
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
+        // No additional properties needed for these simple fluids
     }
 }
