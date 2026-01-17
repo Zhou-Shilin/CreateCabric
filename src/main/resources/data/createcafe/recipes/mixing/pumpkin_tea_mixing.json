@@ -5,7 +5,7 @@
       "item": "minecraft:pumpkin"
     },
     {
-      "fluidTag": "forge:milk",
+      "fluidTag": "c:milk",
       "amount": 250
     },
     {

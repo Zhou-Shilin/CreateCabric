@@ -1,16 +1,18 @@
 {
   "type": "botania:mana_infusion",
-  "conditions": [
-    {
-      "modid": "botania",
-      "type": "forge:mod_loaded"
-    }
-  ],
   "input": {
     "item": "minecraft:sweet_berries"
   },
   "output": {
     "item": "createcafe:mana_berries"
   },
-  "mana": 40
+  "mana": 40,
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "botania"
+      ]
+    }
+  ]
 }

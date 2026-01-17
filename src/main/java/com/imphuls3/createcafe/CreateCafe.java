@@ -1,5 +1,6 @@
 package com.imphuls3.createcafe;
 
+import com.imphuls3.createcafe.common.loot.ModLootTableModifications;
 import com.imphuls3.createcafe.registry.ModBlocks;
 import com.imphuls3.createcafe.registry.ModEffects;
 import com.imphuls3.createcafe.registry.ModFluids;
@@ -23,6 +24,7 @@ public class CreateCafe implements ModInitializer {
         ModBlocks.register();
         ModEffects.register();
         ModFluids.register();
+        ModLootTableModifications.register();
         
         // Register compostables
         registerCompostables();
