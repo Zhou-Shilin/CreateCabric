@@ -13,14 +13,16 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.util.Identifier;
 
 public class ModLootTableModifications {
-    // Grass block loot table identifier - short grass is minecraft:short_grass in 1.20+
+    // Grass block loot table identifiers
+    // In 1.20.1 yarn mappings, grass is "short_grass" but we also check "grass" for compatibility
     private static final Identifier SHORT_GRASS_LOOT_TABLE = new Identifier("minecraft", "blocks/short_grass");
+    private static final Identifier GRASS_LOOT_TABLE = new Identifier("minecraft", "blocks/grass");
     private static final Identifier TALL_GRASS_LOOT_TABLE = new Identifier("minecraft", "blocks/tall_grass");
 
     public static void register() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            // Only modify the grass loot tables
-            if (SHORT_GRASS_LOOT_TABLE.equals(id) || TALL_GRASS_LOOT_TABLE.equals(id)) {
+            // Only modify the grass loot tables - check both old and new names for compatibility
+            if (SHORT_GRASS_LOOT_TABLE.equals(id) || GRASS_LOOT_TABLE.equals(id) || TALL_GRASS_LOOT_TABLE.equals(id)) {
                 // Add cassava seeds with 10% chance when not using shears
                 LootPool.Builder cassavaPool = LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(1))
