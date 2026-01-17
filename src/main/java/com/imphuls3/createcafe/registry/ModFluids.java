@@ -153,8 +153,29 @@ public class ModFluids {
     public static Item COFFEE_BUCKET;
     public static Item MELTED_SUGAR_BUCKET;
     
-    private static FlowableFluid registerFluid(String name, Supplier<Item> bucketItem) {
-        CafeFluid fluid = new CafeFluid(bucketItem) {};
+    /**
+     * Helper class to hold both fluid and bucket item references during registration.
+     */
+    private static class FluidBucketPair {
+        final FlowableFluid fluid;
+        final Item bucket;
+        
+        FluidBucketPair(FlowableFluid fluid, Item bucket) {
+            this.fluid = fluid;
+            this.bucket = bucket;
+        }
+    }
+    
+    /**
+     * Registers both a fluid and its corresponding bucket item together.
+     * This ensures proper initialization order and avoids the chicken-and-egg problem.
+     */
+    private static FluidBucketPair registerFluidWithBucket(String name) {
+        // Create a holder for the bucket item to resolve circular reference
+        Item[] bucketHolder = new Item[1];
+        
+        // Register the fluid with a lazy bucket supplier
+        CafeFluid fluid = new CafeFluid(() -> bucketHolder[0]) {};
         Registry.register(Registries.FLUID, CreateCafe.id(name), fluid);
         FLUIDS.put(name, fluid);
         
@@ -166,193 +187,196 @@ public class ModFluids {
             }
         });
         
-        return fluid;
-    }
-    
-    private static Item registerBucketItem(String fluidName, Supplier<FlowableFluid> fluidSupplier) {
-        String bucketName = fluidName + "_bucket";
-        Item bucket = new BucketItem(fluidSupplier.get(), new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1));
+        // Register the bucket item
+        String bucketName = name + "_bucket";
+        Item bucket = new BucketItem(fluid, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1));
         Registry.register(Registries.ITEM, CreateCafe.id(bucketName), bucket);
         BUCKET_ITEMS.put(bucketName, bucket);
-        return bucket;
+        
+        // Update the holder so the fluid's getBucketItem() returns the correct item
+        bucketHolder[0] = bucket;
+        
+        return new FluidBucketPair(fluid, bucket);
     }
     
     public static void register() {
         CreateCafe.LOGGER.info("Registering Create Cafe fluids...");
         
+        FluidBucketPair pair;
+        
         // Register tea fluids with their bucket items
-        ALOE_TEA = registerFluid("aloe_tea", () -> ALOE_TEA_BUCKET);
-        ALOE_TEA_BUCKET = registerBucketItem("aloe_tea", () -> ALOE_TEA);
+        pair = registerFluidWithBucket("aloe_tea");
+        ALOE_TEA = pair.fluid; ALOE_TEA_BUCKET = pair.bucket;
         
-        APPLE_TEA = registerFluid("apple_tea", () -> APPLE_TEA_BUCKET);
-        APPLE_TEA_BUCKET = registerBucketItem("apple_tea", () -> APPLE_TEA);
+        pair = registerFluidWithBucket("apple_tea");
+        APPLE_TEA = pair.fluid; APPLE_TEA_BUCKET = pair.bucket;
         
-        APRICOT_TEA = registerFluid("apricot_tea", () -> APRICOT_TEA_BUCKET);
-        APRICOT_TEA_BUCKET = registerBucketItem("apricot_tea", () -> APRICOT_TEA);
+        pair = registerFluidWithBucket("apricot_tea");
+        APRICOT_TEA = pair.fluid; APRICOT_TEA_BUCKET = pair.bucket;
         
-        AVOCADO_TEA = registerFluid("avocado_tea", () -> AVOCADO_TEA_BUCKET);
-        AVOCADO_TEA_BUCKET = registerBucketItem("avocado_tea", () -> AVOCADO_TEA);
+        pair = registerFluidWithBucket("avocado_tea");
+        AVOCADO_TEA = pair.fluid; AVOCADO_TEA_BUCKET = pair.bucket;
         
-        BANANA_TEA = registerFluid("banana_tea", () -> BANANA_TEA_BUCKET);
-        BANANA_TEA_BUCKET = registerBucketItem("banana_tea", () -> BANANA_TEA);
+        pair = registerFluidWithBucket("banana_tea");
+        BANANA_TEA = pair.fluid; BANANA_TEA_BUCKET = pair.bucket;
         
-        BARBERRY_TEA = registerFluid("barberry_tea", () -> BARBERRY_TEA_BUCKET);
-        BARBERRY_TEA_BUCKET = registerBucketItem("barberry_tea", () -> BARBERRY_TEA);
+        pair = registerFluidWithBucket("barberry_tea");
+        BARBERRY_TEA = pair.fluid; BARBERRY_TEA_BUCKET = pair.bucket;
         
-        BLACKBERRY_TEA = registerFluid("blackberry_tea", () -> BLACKBERRY_TEA_BUCKET);
-        BLACKBERRY_TEA_BUCKET = registerBucketItem("blackberry_tea", () -> BLACKBERRY_TEA);
+        pair = registerFluidWithBucket("blackberry_tea");
+        BLACKBERRY_TEA = pair.fluid; BLACKBERRY_TEA_BUCKET = pair.bucket;
         
-        BLOOD_TEA = registerFluid("blood_tea", () -> BLOOD_TEA_BUCKET);
-        BLOOD_TEA_BUCKET = registerBucketItem("blood_tea", () -> BLOOD_TEA);
+        pair = registerFluidWithBucket("blood_tea");
+        BLOOD_TEA = pair.fluid; BLOOD_TEA_BUCKET = pair.bucket;
         
-        BLUEBERRY_TEA = registerFluid("blueberry_tea", () -> BLUEBERRY_TEA_BUCKET);
-        BLUEBERRY_TEA_BUCKET = registerBucketItem("blueberry_tea", () -> BLUEBERRY_TEA);
+        pair = registerFluidWithBucket("blueberry_tea");
+        BLUEBERRY_TEA = pair.fluid; BLUEBERRY_TEA_BUCKET = pair.bucket;
         
-        CHERRY_TEA = registerFluid("cherry_tea", () -> CHERRY_TEA_BUCKET);
-        CHERRY_TEA_BUCKET = registerBucketItem("cherry_tea", () -> CHERRY_TEA);
+        pair = registerFluidWithBucket("cherry_tea");
+        CHERRY_TEA = pair.fluid; CHERRY_TEA_BUCKET = pair.bucket;
         
-        CITRON_TEA = registerFluid("citron_tea", () -> CITRON_TEA_BUCKET);
-        CITRON_TEA_BUCKET = registerBucketItem("citron_tea", () -> CITRON_TEA);
+        pair = registerFluidWithBucket("citron_tea");
+        CITRON_TEA = pair.fluid; CITRON_TEA_BUCKET = pair.bucket;
         
-        COCONUT_TEA = registerFluid("coconut_tea", () -> COCONUT_TEA_BUCKET);
-        COCONUT_TEA_BUCKET = registerBucketItem("coconut_tea", () -> COCONUT_TEA);
+        pair = registerFluidWithBucket("coconut_tea");
+        COCONUT_TEA = pair.fluid; COCONUT_TEA_BUCKET = pair.bucket;
         
-        DRAGONFRUIT_TEA = registerFluid("dragonfruit_tea", () -> DRAGONFRUIT_TEA_BUCKET);
-        DRAGONFRUIT_TEA_BUCKET = registerBucketItem("dragonfruit_tea", () -> DRAGONFRUIT_TEA);
+        pair = registerFluidWithBucket("dragonfruit_tea");
+        DRAGONFRUIT_TEA = pair.fluid; DRAGONFRUIT_TEA_BUCKET = pair.bucket;
         
-        DURIAN_TEA = registerFluid("durian_tea", () -> DURIAN_TEA_BUCKET);
-        DURIAN_TEA_BUCKET = registerBucketItem("durian_tea", () -> DURIAN_TEA);
+        pair = registerFluidWithBucket("durian_tea");
+        DURIAN_TEA = pair.fluid; DURIAN_TEA_BUCKET = pair.bucket;
         
-        FIG_TEA = registerFluid("fig_tea", () -> FIG_TEA_BUCKET);
-        FIG_TEA_BUCKET = registerBucketItem("fig_tea", () -> FIG_TEA);
+        pair = registerFluidWithBucket("fig_tea");
+        FIG_TEA = pair.fluid; FIG_TEA_BUCKET = pair.bucket;
         
-        GOOSEBERRY_TEA = registerFluid("gooseberry_tea", () -> GOOSEBERRY_TEA_BUCKET);
-        GOOSEBERRY_TEA_BUCKET = registerBucketItem("gooseberry_tea", () -> GOOSEBERRY_TEA);
+        pair = registerFluidWithBucket("gooseberry_tea");
+        GOOSEBERRY_TEA = pair.fluid; GOOSEBERRY_TEA_BUCKET = pair.bucket;
         
-        GRAPE_TEA = registerFluid("grape_tea", () -> GRAPE_TEA_BUCKET);
-        GRAPE_TEA_BUCKET = registerBucketItem("grape_tea", () -> GRAPE_TEA);
+        pair = registerFluidWithBucket("grape_tea");
+        GRAPE_TEA = pair.fluid; GRAPE_TEA_BUCKET = pair.bucket;
         
-        GRAPEFRUIT_TEA = registerFluid("grapefruit_tea", () -> GRAPEFRUIT_TEA_BUCKET);
-        GRAPEFRUIT_TEA_BUCKET = registerBucketItem("grapefruit_tea", () -> GRAPEFRUIT_TEA);
+        pair = registerFluidWithBucket("grapefruit_tea");
+        GRAPEFRUIT_TEA = pair.fluid; GRAPEFRUIT_TEA_BUCKET = pair.bucket;
         
-        GUAVA_TEA = registerFluid("guava_tea", () -> GUAVA_TEA_BUCKET);
-        GUAVA_TEA_BUCKET = registerBucketItem("guava_tea", () -> GUAVA_TEA);
+        pair = registerFluidWithBucket("guava_tea");
+        GUAVA_TEA = pair.fluid; GUAVA_TEA_BUCKET = pair.bucket;
         
-        JACKFRUIT_TEA = registerFluid("jackfruit_tea", () -> JACKFRUIT_TEA_BUCKET);
-        JACKFRUIT_TEA_BUCKET = registerBucketItem("jackfruit_tea", () -> JACKFRUIT_TEA);
+        pair = registerFluidWithBucket("jackfruit_tea");
+        JACKFRUIT_TEA = pair.fluid; JACKFRUIT_TEA_BUCKET = pair.bucket;
         
-        KIWI_TEA = registerFluid("kiwi_tea", () -> KIWI_TEA_BUCKET);
-        KIWI_TEA_BUCKET = registerBucketItem("kiwi_tea", () -> KIWI_TEA);
+        pair = registerFluidWithBucket("kiwi_tea");
+        KIWI_TEA = pair.fluid; KIWI_TEA_BUCKET = pair.bucket;
         
-        LAVENDER_TEA = registerFluid("lavender_tea", () -> LAVENDER_TEA_BUCKET);
-        LAVENDER_TEA_BUCKET = registerBucketItem("lavender_tea", () -> LAVENDER_TEA);
+        pair = registerFluidWithBucket("lavender_tea");
+        LAVENDER_TEA = pair.fluid; LAVENDER_TEA_BUCKET = pair.bucket;
         
-        LEMON_TEA = registerFluid("lemon_tea", () -> LEMON_TEA_BUCKET);
-        LEMON_TEA_BUCKET = registerBucketItem("lemon_tea", () -> LEMON_TEA);
+        pair = registerFluidWithBucket("lemon_tea");
+        LEMON_TEA = pair.fluid; LEMON_TEA_BUCKET = pair.bucket;
         
-        LIME_TEA = registerFluid("lime_tea", () -> LIME_TEA_BUCKET);
-        LIME_TEA_BUCKET = registerBucketItem("lime_tea", () -> LIME_TEA);
+        pair = registerFluidWithBucket("lime_tea");
+        LIME_TEA = pair.fluid; LIME_TEA_BUCKET = pair.bucket;
         
-        LYCHEE_TEA = registerFluid("lychee_tea", () -> LYCHEE_TEA_BUCKET);
-        LYCHEE_TEA_BUCKET = registerBucketItem("lychee_tea", () -> LYCHEE_TEA);
+        pair = registerFluidWithBucket("lychee_tea");
+        LYCHEE_TEA = pair.fluid; LYCHEE_TEA_BUCKET = pair.bucket;
         
-        MANA_TEA = registerFluid("mana_tea", () -> MANA_TEA_BUCKET);
-        MANA_TEA_BUCKET = registerBucketItem("mana_tea", () -> MANA_TEA);
+        pair = registerFluidWithBucket("mana_tea");
+        MANA_TEA = pair.fluid; MANA_TEA_BUCKET = pair.bucket;
         
-        MANDARIN_TEA = registerFluid("mandarin_tea", () -> MANDARIN_TEA_BUCKET);
-        MANDARIN_TEA_BUCKET = registerBucketItem("mandarin_tea", () -> MANDARIN_TEA);
+        pair = registerFluidWithBucket("mandarin_tea");
+        MANDARIN_TEA = pair.fluid; MANDARIN_TEA_BUCKET = pair.bucket;
         
-        MANGO_TEA = registerFluid("mango_tea", () -> MANGO_TEA_BUCKET);
-        MANGO_TEA_BUCKET = registerBucketItem("mango_tea", () -> MANGO_TEA);
+        pair = registerFluidWithBucket("mango_tea");
+        MANGO_TEA = pair.fluid; MANGO_TEA_BUCKET = pair.bucket;
         
-        ORANGE_TEA = registerFluid("orange_tea", () -> ORANGE_TEA_BUCKET);
-        ORANGE_TEA_BUCKET = registerBucketItem("orange_tea", () -> ORANGE_TEA);
+        pair = registerFluidWithBucket("orange_tea");
+        ORANGE_TEA = pair.fluid; ORANGE_TEA_BUCKET = pair.bucket;
         
-        OREO_TEA = registerFluid("oreo_tea", () -> OREO_TEA_BUCKET);
-        OREO_TEA_BUCKET = registerBucketItem("oreo_tea", () -> OREO_TEA);
+        pair = registerFluidWithBucket("oreo_tea");
+        OREO_TEA = pair.fluid; OREO_TEA_BUCKET = pair.bucket;
         
-        PAPAYA_TEA = registerFluid("papaya_tea", () -> PAPAYA_TEA_BUCKET);
-        PAPAYA_TEA_BUCKET = registerBucketItem("papaya_tea", () -> PAPAYA_TEA);
+        pair = registerFluidWithBucket("papaya_tea");
+        PAPAYA_TEA = pair.fluid; PAPAYA_TEA_BUCKET = pair.bucket;
         
-        PASSIONFRUIT_TEA = registerFluid("passionfruit_tea", () -> PASSIONFRUIT_TEA_BUCKET);
-        PASSIONFRUIT_TEA_BUCKET = registerBucketItem("passionfruit_tea", () -> PASSIONFRUIT_TEA);
+        pair = registerFluidWithBucket("passionfruit_tea");
+        PASSIONFRUIT_TEA = pair.fluid; PASSIONFRUIT_TEA_BUCKET = pair.bucket;
         
-        PEACH_TEA = registerFluid("peach_tea", () -> PEACH_TEA_BUCKET);
-        PEACH_TEA_BUCKET = registerBucketItem("peach_tea", () -> PEACH_TEA);
+        pair = registerFluidWithBucket("peach_tea");
+        PEACH_TEA = pair.fluid; PEACH_TEA_BUCKET = pair.bucket;
         
-        PERSIMMON_TEA = registerFluid("persimmon_tea", () -> PERSIMMON_TEA_BUCKET);
-        PERSIMMON_TEA_BUCKET = registerBucketItem("persimmon_tea", () -> PERSIMMON_TEA);
+        pair = registerFluidWithBucket("persimmon_tea");
+        PERSIMMON_TEA = pair.fluid; PERSIMMON_TEA_BUCKET = pair.bucket;
         
-        PINEAPPLE_TEA = registerFluid("pineapple_tea", () -> PINEAPPLE_TEA_BUCKET);
-        PINEAPPLE_TEA_BUCKET = registerBucketItem("pineapple_tea", () -> PINEAPPLE_TEA);
+        pair = registerFluidWithBucket("pineapple_tea");
+        PINEAPPLE_TEA = pair.fluid; PINEAPPLE_TEA_BUCKET = pair.bucket;
         
-        PLUM_TEA = registerFluid("plum_tea", () -> PLUM_TEA_BUCKET);
-        PLUM_TEA_BUCKET = registerBucketItem("plum_tea", () -> PLUM_TEA);
+        pair = registerFluidWithBucket("plum_tea");
+        PLUM_TEA = pair.fluid; PLUM_TEA_BUCKET = pair.bucket;
         
-        POMEGRANATE_TEA = registerFluid("pomegranate_tea", () -> POMEGRANATE_TEA_BUCKET);
-        POMEGRANATE_TEA_BUCKET = registerBucketItem("pomegranate_tea", () -> POMEGRANATE_TEA);
+        pair = registerFluidWithBucket("pomegranate_tea");
+        POMEGRANATE_TEA = pair.fluid; POMEGRANATE_TEA_BUCKET = pair.bucket;
         
-        POMELO_TEA = registerFluid("pomelo_tea", () -> POMELO_TEA_BUCKET);
-        POMELO_TEA_BUCKET = registerBucketItem("pomelo_tea", () -> POMELO_TEA);
+        pair = registerFluidWithBucket("pomelo_tea");
+        POMELO_TEA = pair.fluid; POMELO_TEA_BUCKET = pair.bucket;
         
-        PUMPKIN_TEA = registerFluid("pumpkin_tea", () -> PUMPKIN_TEA_BUCKET);
-        PUMPKIN_TEA_BUCKET = registerBucketItem("pumpkin_tea", () -> PUMPKIN_TEA);
+        pair = registerFluidWithBucket("pumpkin_tea");
+        PUMPKIN_TEA = pair.fluid; PUMPKIN_TEA_BUCKET = pair.bucket;
         
-        RASPBERRY_TEA = registerFluid("raspberry_tea", () -> RASPBERRY_TEA_BUCKET);
-        RASPBERRY_TEA_BUCKET = registerBucketItem("raspberry_tea", () -> RASPBERRY_TEA);
+        pair = registerFluidWithBucket("raspberry_tea");
+        RASPBERRY_TEA = pair.fluid; RASPBERRY_TEA_BUCKET = pair.bucket;
         
-        REDLOVE_TEA = registerFluid("redlove_tea", () -> REDLOVE_TEA_BUCKET);
-        REDLOVE_TEA_BUCKET = registerBucketItem("redlove_tea", () -> REDLOVE_TEA);
+        pair = registerFluidWithBucket("redlove_tea");
+        REDLOVE_TEA = pair.fluid; REDLOVE_TEA_BUCKET = pair.bucket;
         
-        STARFRUIT_TEA = registerFluid("starfruit_tea", () -> STARFRUIT_TEA_BUCKET);
-        STARFRUIT_TEA_BUCKET = registerBucketItem("starfruit_tea", () -> STARFRUIT_TEA);
+        pair = registerFluidWithBucket("starfruit_tea");
+        STARFRUIT_TEA = pair.fluid; STARFRUIT_TEA_BUCKET = pair.bucket;
         
-        STRAWBERRY_TEA = registerFluid("strawberry_tea", () -> STRAWBERRY_TEA_BUCKET);
-        STRAWBERRY_TEA_BUCKET = registerBucketItem("strawberry_tea", () -> STRAWBERRY_TEA);
+        pair = registerFluidWithBucket("strawberry_tea");
+        STRAWBERRY_TEA = pair.fluid; STRAWBERRY_TEA_BUCKET = pair.bucket;
         
-        SWEETBERRY_TEA = registerFluid("sweetberry_tea", () -> SWEETBERRY_TEA_BUCKET);
-        SWEETBERRY_TEA_BUCKET = registerBucketItem("sweetberry_tea", () -> SWEETBERRY_TEA);
+        pair = registerFluidWithBucket("sweetberry_tea");
+        SWEETBERRY_TEA = pair.fluid; SWEETBERRY_TEA_BUCKET = pair.bucket;
         
-        TAMARIND_TEA = registerFluid("tamarind_tea", () -> TAMARIND_TEA_BUCKET);
-        TAMARIND_TEA_BUCKET = registerBucketItem("tamarind_tea", () -> TAMARIND_TEA);
+        pair = registerFluidWithBucket("tamarind_tea");
+        TAMARIND_TEA = pair.fluid; TAMARIND_TEA_BUCKET = pair.bucket;
         
-        VANILLA_TEA = registerFluid("vanilla_tea", () -> VANILLA_TEA_BUCKET);
-        VANILLA_TEA_BUCKET = registerBucketItem("vanilla_tea", () -> VANILLA_TEA);
+        pair = registerFluidWithBucket("vanilla_tea");
+        VANILLA_TEA = pair.fluid; VANILLA_TEA_BUCKET = pair.bucket;
         
-        WATERMELON_TEA = registerFluid("watermelon_tea", () -> WATERMELON_TEA_BUCKET);
-        WATERMELON_TEA_BUCKET = registerBucketItem("watermelon_tea", () -> WATERMELON_TEA);
+        pair = registerFluidWithBucket("watermelon_tea");
+        WATERMELON_TEA = pair.fluid; WATERMELON_TEA_BUCKET = pair.bucket;
         
-        YUCCA_TEA = registerFluid("yucca_tea", () -> YUCCA_TEA_BUCKET);
-        YUCCA_TEA_BUCKET = registerBucketItem("yucca_tea", () -> YUCCA_TEA);
+        pair = registerFluidWithBucket("yucca_tea");
+        YUCCA_TEA = pair.fluid; YUCCA_TEA_BUCKET = pair.bucket;
         
         // Register syrup fluids with their bucket items
-        BANANA_SYRUP = registerFluid("banana_syrup", () -> BANANA_SYRUP_BUCKET);
-        BANANA_SYRUP_BUCKET = registerBucketItem("banana_syrup", () -> BANANA_SYRUP);
+        pair = registerFluidWithBucket("banana_syrup");
+        BANANA_SYRUP = pair.fluid; BANANA_SYRUP_BUCKET = pair.bucket;
         
-        CARAMEL_SYRUP = registerFluid("caramel_syrup", () -> CARAMEL_SYRUP_BUCKET);
-        CARAMEL_SYRUP_BUCKET = registerBucketItem("caramel_syrup", () -> CARAMEL_SYRUP);
+        pair = registerFluidWithBucket("caramel_syrup");
+        CARAMEL_SYRUP = pair.fluid; CARAMEL_SYRUP_BUCKET = pair.bucket;
         
-        COCONUT_SYRUP = registerFluid("coconut_syrup", () -> COCONUT_SYRUP_BUCKET);
-        COCONUT_SYRUP_BUCKET = registerBucketItem("coconut_syrup", () -> COCONUT_SYRUP);
+        pair = registerFluidWithBucket("coconut_syrup");
+        COCONUT_SYRUP = pair.fluid; COCONUT_SYRUP_BUCKET = pair.bucket;
         
-        MINT_SYRUP = registerFluid("mint_syrup", () -> MINT_SYRUP_BUCKET);
-        MINT_SYRUP_BUCKET = registerBucketItem("mint_syrup", () -> MINT_SYRUP);
+        pair = registerFluidWithBucket("mint_syrup");
+        MINT_SYRUP = pair.fluid; MINT_SYRUP_BUCKET = pair.bucket;
         
-        RASPBERRY_SYRUP = registerFluid("raspberry_syrup", () -> RASPBERRY_SYRUP_BUCKET);
-        RASPBERRY_SYRUP_BUCKET = registerBucketItem("raspberry_syrup", () -> RASPBERRY_SYRUP);
+        pair = registerFluidWithBucket("raspberry_syrup");
+        RASPBERRY_SYRUP = pair.fluid; RASPBERRY_SYRUP_BUCKET = pair.bucket;
         
-        STRAWBERRY_SYRUP = registerFluid("strawberry_syrup", () -> STRAWBERRY_SYRUP_BUCKET);
-        STRAWBERRY_SYRUP_BUCKET = registerBucketItem("strawberry_syrup", () -> STRAWBERRY_SYRUP);
+        pair = registerFluidWithBucket("strawberry_syrup");
+        STRAWBERRY_SYRUP = pair.fluid; STRAWBERRY_SYRUP_BUCKET = pair.bucket;
         
-        VANILLA_SYRUP = registerFluid("vanilla_syrup", () -> VANILLA_SYRUP_BUCKET);
-        VANILLA_SYRUP_BUCKET = registerBucketItem("vanilla_syrup", () -> VANILLA_SYRUP);
+        pair = registerFluidWithBucket("vanilla_syrup");
+        VANILLA_SYRUP = pair.fluid; VANILLA_SYRUP_BUCKET = pair.bucket;
         
         // Register other fluids with their bucket items
-        COFFEE = registerFluid("coffee", () -> COFFEE_BUCKET);
-        COFFEE_BUCKET = registerBucketItem("coffee", () -> COFFEE);
+        pair = registerFluidWithBucket("coffee");
+        COFFEE = pair.fluid; COFFEE_BUCKET = pair.bucket;
         
-        MELTED_SUGAR = registerFluid("melted_sugar", () -> MELTED_SUGAR_BUCKET);
-        MELTED_SUGAR_BUCKET = registerBucketItem("melted_sugar", () -> MELTED_SUGAR);
+        pair = registerFluidWithBucket("melted_sugar");
+        MELTED_SUGAR = pair.fluid; MELTED_SUGAR_BUCKET = pair.bucket;
         
         CreateCafe.LOGGER.info("Registered {} fluids and {} bucket items", FLUIDS.size(), BUCKET_ITEMS.size());
     }
