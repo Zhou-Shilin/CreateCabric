@@ -384,4 +384,11 @@ public class ModFluids {
     public static FlowableFluid getFluid(String name) {
         return FLUIDS.get(name);
     }
+    
+    /**
+     * Returns all registered fluids for client-side render handler registration.
+     */
+    public static Iterable<FlowableFluid> getAllFluids() {
+        return FLUIDS.values();
+    }
 }
