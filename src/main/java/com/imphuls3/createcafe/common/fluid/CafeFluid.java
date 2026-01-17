@@ -15,11 +15,19 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
+import java.util.function.Supplier;
+
 /**
  * Base class for Create Cafe fluids (teas, syrups, etc.)
  * These are simple, non-placeable fluids used in Create's fluid processing.
  */
 public abstract class CafeFluid extends FlowableFluid {
+    
+    private final Supplier<Item> bucketItem;
+    
+    public CafeFluid(Supplier<Item> bucketItem) {
+        this.bucketItem = bucketItem;
+    }
     
     @Override
     public Fluid getFlowing() {
@@ -53,8 +61,8 @@ public abstract class CafeFluid extends FlowableFluid {
 
     @Override
     public Item getBucketItem() {
-        // Override in subclasses if bucket items are needed
-        return Items.AIR;
+        Item item = bucketItem.get();
+        return item != null ? item : Items.AIR;
     }
 
     @Override
