@@ -1,12 +1,6 @@
 {
   "type": "create:mixing",
   "heatRequirement": "heated",
-  "conditions": [
-    {
-      "modid": "neapolitan",
-      "type": "forge:mod_loaded"
-    }
-  ],
   "ingredients": [
     {
       "item": "neapolitan:mint_leaves"
@@ -24,6 +18,14 @@
     {
       "amount": 1000,
       "fluid": "createcafe:mint_syrup"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "neapolitan"
+      ]
     }
   ]
 }

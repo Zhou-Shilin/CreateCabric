@@ -1,21 +1,11 @@
 {
   "type": "create:mixing",
-  "conditions": [
-    {
-      "value":
-      {
-        "tag": "forge:fruits/persimmon",
-        "type": "forge:tag_empty"
-      },
-      "type": "forge:not"
-    }
-  ],
   "ingredients": [
     {
-      "tag": "forge:fruits/persimmon"
+      "tag": "c:fruits/persimmon"
     },
     {
-      "fluidTag": "forge:milk",
+      "fluidTag": "c:milk",
       "amount": 250
     },
     {
@@ -29,5 +19,14 @@
       "amount": 500
     }
   ],
-  "heatRequirement": "heated"
+  "heatRequirement": "heated",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:fruits/persimmon"
+      ]
+    }
+  ]
 }

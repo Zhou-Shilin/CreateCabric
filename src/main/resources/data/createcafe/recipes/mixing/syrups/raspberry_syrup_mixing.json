@@ -1,19 +1,9 @@
 {
   "type": "create:mixing",
   "heatRequirement": "heated",
-  "conditions": [
-    {
-      "value":
-      {
-        "tag": "forge:fruits/raspberry",
-        "type": "forge:tag_empty"
-      },
-      "type": "forge:not"
-    }
-  ],
   "ingredients": [
     {
-      "tag": "forge:fruits/raspberry"
+      "tag": "c:fruits/raspberry"
     },
     {
       "amount": 250,
@@ -28,6 +18,15 @@
     {
       "amount": 1000,
       "fluid": "createcafe:raspberry_syrup"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:fruits/raspberry"
+      ]
     }
   ]
 }

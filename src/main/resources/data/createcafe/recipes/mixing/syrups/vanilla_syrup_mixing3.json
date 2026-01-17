@@ -1,12 +1,6 @@
 {
   "type": "create:mixing",
   "heatRequirement": "heated",
-  "conditions": [
-    {
-      "modid": "croptopia",
-      "type": "forge:mod_loaded"
-    }
-  ],
   "ingredients": [
     {
       "item": "croptopia:vanilla"
@@ -24,6 +18,14 @@
     {
       "amount": 1000,
       "fluid": "createcafe:vanilla_syrup"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "croptopia"
+      ]
     }
   ]
 }

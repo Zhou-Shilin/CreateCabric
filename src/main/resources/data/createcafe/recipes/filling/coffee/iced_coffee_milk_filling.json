@@ -5,7 +5,7 @@
       "item": "createcafe:iced_coffee"
     },
     {
-      "fluidTag": "forge:milk",
+      "fluidTag": "c:milk",
       "amount": 250
     }
   ],

@@ -5,7 +5,7 @@
       "item": "minecraft:sweet_berries"
     },
     {
-      "fluidTag": "forge:milk",
+      "fluidTag": "c:milk",
       "amount": 250
     },
     {

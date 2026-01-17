@@ -7,7 +7,7 @@
   ],
   "key": {
     "G": {
-      "tag": "forge:glass"
+      "tag": "c:glass"
     },
     "S": {
       "item": "create:polished_cut_diorite_slab"
