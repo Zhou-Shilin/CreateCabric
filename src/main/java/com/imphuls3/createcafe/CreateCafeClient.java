@@ -10,12 +10,10 @@ import net.minecraft.util.Identifier;
 
 public class CreateCafeClient implements ClientModInitializer {
     
-    // Use vanilla water textures with custom tint for milk tea fluids
-    private static final Identifier WATER_STILL = new Identifier("minecraft", "block/water_still");
-    private static final Identifier WATER_FLOW = new Identifier("minecraft", "block/water_flow");
-    
-    // Milk tea tint color (creamy beige/tan color)
-    private static final int MILK_TEA_TINT = 0xD4A574;
+    // Custom milk tea textures from the mod's block texture folder
+    // SimpleFluidRenderHandler automatically handles texture registration
+    private static final Identifier MILK_TEA_STILL = CreateCafe.id("block/milk_tea_still");
+    private static final Identifier MILK_TEA_FLOW = CreateCafe.id("block/milk_tea_flow");
     
     @Override
     public void onInitializeClient() {
@@ -27,15 +25,18 @@ public class CreateCafeClient implements ClientModInitializer {
     }
     
     private void registerFluidRenderers() {
-        // Register render handlers for all fluids using water texture with milk tea tint
-        for (var fluid : ModFluids.getAllFluids()) {
+        // Register render handlers for all fluids using milk_tea texture with per-fluid tint colors
+        for (var entry : ModFluids.getFluidColors().entrySet()) {
+            var fluid = entry.getKey();
+            int color = entry.getValue();
+            
             FluidRenderHandlerRegistry.INSTANCE.register(fluid, 
-                new SimpleFluidRenderHandler(WATER_STILL, WATER_FLOW, MILK_TEA_TINT));
+                new SimpleFluidRenderHandler(MILK_TEA_STILL, MILK_TEA_FLOW, color));
             
             // Make fluids render as translucent
             BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), fluid);
         }
         
-        CreateCafe.LOGGER.info("Registered fluid render handlers");
+        CreateCafe.LOGGER.info("Registered fluid render handlers with per-fluid tint colors");
     }
 }
