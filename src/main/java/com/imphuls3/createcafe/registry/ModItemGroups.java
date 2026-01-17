@@ -106,6 +106,69 @@ public class ModItemGroups {
                 entries.add(ModItems.COFFEE_GROUNDS);
                 entries.add(ModItems.CASSAVA_SEEDS);
                 entries.add(ModItems.CASSAVA_ROOT);
+
+                // Bucket items - Tea
+                entries.add(ModFluids.ALOE_TEA_BUCKET);
+                entries.add(ModFluids.APPLE_TEA_BUCKET);
+                entries.add(ModFluids.APRICOT_TEA_BUCKET);
+                entries.add(ModFluids.AVOCADO_TEA_BUCKET);
+                entries.add(ModFluids.BANANA_TEA_BUCKET);
+                entries.add(ModFluids.BARBERRY_TEA_BUCKET);
+                entries.add(ModFluids.BLACKBERRY_TEA_BUCKET);
+                entries.add(ModFluids.BLOOD_TEA_BUCKET);
+                entries.add(ModFluids.BLUEBERRY_TEA_BUCKET);
+                entries.add(ModFluids.CHERRY_TEA_BUCKET);
+                entries.add(ModFluids.CITRON_TEA_BUCKET);
+                entries.add(ModFluids.COCONUT_TEA_BUCKET);
+                entries.add(ModFluids.DRAGONFRUIT_TEA_BUCKET);
+                entries.add(ModFluids.DURIAN_TEA_BUCKET);
+                entries.add(ModFluids.FIG_TEA_BUCKET);
+                entries.add(ModFluids.GOOSEBERRY_TEA_BUCKET);
+                entries.add(ModFluids.GRAPE_TEA_BUCKET);
+                entries.add(ModFluids.GRAPEFRUIT_TEA_BUCKET);
+                entries.add(ModFluids.GUAVA_TEA_BUCKET);
+                entries.add(ModFluids.JACKFRUIT_TEA_BUCKET);
+                entries.add(ModFluids.KIWI_TEA_BUCKET);
+                entries.add(ModFluids.LAVENDER_TEA_BUCKET);
+                entries.add(ModFluids.LEMON_TEA_BUCKET);
+                entries.add(ModFluids.LIME_TEA_BUCKET);
+                entries.add(ModFluids.LYCHEE_TEA_BUCKET);
+                entries.add(ModFluids.MANA_TEA_BUCKET);
+                entries.add(ModFluids.MANDARIN_TEA_BUCKET);
+                entries.add(ModFluids.MANGO_TEA_BUCKET);
+                entries.add(ModFluids.ORANGE_TEA_BUCKET);
+                entries.add(ModFluids.OREO_TEA_BUCKET);
+                entries.add(ModFluids.PAPAYA_TEA_BUCKET);
+                entries.add(ModFluids.PASSIONFRUIT_TEA_BUCKET);
+                entries.add(ModFluids.PEACH_TEA_BUCKET);
+                entries.add(ModFluids.PERSIMMON_TEA_BUCKET);
+                entries.add(ModFluids.PINEAPPLE_TEA_BUCKET);
+                entries.add(ModFluids.PLUM_TEA_BUCKET);
+                entries.add(ModFluids.POMEGRANATE_TEA_BUCKET);
+                entries.add(ModFluids.POMELO_TEA_BUCKET);
+                entries.add(ModFluids.PUMPKIN_TEA_BUCKET);
+                entries.add(ModFluids.RASPBERRY_TEA_BUCKET);
+                entries.add(ModFluids.REDLOVE_TEA_BUCKET);
+                entries.add(ModFluids.STARFRUIT_TEA_BUCKET);
+                entries.add(ModFluids.STRAWBERRY_TEA_BUCKET);
+                entries.add(ModFluids.SWEETBERRY_TEA_BUCKET);
+                entries.add(ModFluids.TAMARIND_TEA_BUCKET);
+                entries.add(ModFluids.VANILLA_TEA_BUCKET);
+                entries.add(ModFluids.WATERMELON_TEA_BUCKET);
+                entries.add(ModFluids.YUCCA_TEA_BUCKET);
+
+                // Bucket items - Syrup
+                entries.add(ModFluids.BANANA_SYRUP_BUCKET);
+                entries.add(ModFluids.CARAMEL_SYRUP_BUCKET);
+                entries.add(ModFluids.COCONUT_SYRUP_BUCKET);
+                entries.add(ModFluids.MINT_SYRUP_BUCKET);
+                entries.add(ModFluids.RASPBERRY_SYRUP_BUCKET);
+                entries.add(ModFluids.STRAWBERRY_SYRUP_BUCKET);
+                entries.add(ModFluids.VANILLA_SYRUP_BUCKET);
+
+                // Bucket items - Other
+                entries.add(ModFluids.COFFEE_BUCKET);
+                entries.add(ModFluids.MELTED_SUGAR_BUCKET);
             })
             .build();
 
